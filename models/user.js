@@ -25,7 +25,7 @@ const UserSchema = mongoose.Schema(
     },
     KPIs: {
       type: Number,
-      required: [true, "Please Provide KPIs"]
+      required: [true, "Please Provide KPIs"],
     },
     address: {
       type: String,
@@ -96,4 +96,4 @@ UserSchema.methods.createJWT = function () {
 
 const User = mongoose.model("user", UserSchema);
 
-module.exports = {User};
+module.exports = { User };

@@ -11,7 +11,7 @@ const { userValidate } = require("../Middleware/userValidate");
 
 const UserRouter = express.Router();
 
-// UserRouter.use(authMiddleware(true));
+UserRouter.use(authMiddleware(true));
 UserRouter.route("/").get(get_users).post(userValidate, create_user);
 UserRouter.route("/:id")
   .get(get_user)

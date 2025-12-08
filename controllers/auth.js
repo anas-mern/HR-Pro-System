@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const User = require("../models/user");
+const { User } = require("../models/user");
 const { BadRequest } = require("../errors");
 const bcrypt = require("bcryptjs");
 const { NotFoundThrower } = require("../errors");
@@ -10,7 +10,7 @@ const sendSuccess = (res, data, status = StatusCodes.OK) =>
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.find({ email });
   NotFoundThrower("Email", user);
   const comparePassword = await bcrypt.compare(password, user.password);
   if (!comparePassword) {
