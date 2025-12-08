@@ -5,7 +5,7 @@ const { authMiddleware } = require("../Middleware/auth");
 const AuthRouter = express.Router();
 
 AuthRouter.route("/login").post(loginValidate, login);
-AuthRouter.route("/my")
+AuthRouter.route("/myaccount")
   .get(authMiddleware(false), me)
-  .patch(authMiddleware(false, editme));
+  .patch(authMiddleware(false), editme);
 module.exports = AuthRouter;

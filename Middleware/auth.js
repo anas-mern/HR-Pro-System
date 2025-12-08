@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { UnauthenticatedError } = require("../errors");
+const { Unauthenticated } = require("../errors");
 require("dotenv").config();
 
 const authMiddleware = (admin) => {
@@ -9,7 +9,7 @@ const authMiddleware = (admin) => {
       !headers.authorization ||
       !headers.authorization.startsWith("Bearer ")
     ) {
-      throw new UnauthenticatedError("Authentication Invalid");
+      throw new Unauthenticated("Authentication Invalid");
     }
     const token = headers.authorization.split(" ")[1];
 
@@ -18,14 +18,11 @@ const authMiddleware = (admin) => {
       id: userId,
       role,
     };
-
     if (admin && role !== 1) {
-      throw new UnauthenticatedError(
-        "You Are Not Allowed To Do This Operation"
-      );
+      throw new Unauthenticated("You Are Not Allowed To Do This Operation");
     }
     next();
   };
 };
 
-module.exports = {authMiddleware};
+module.exports = { authMiddleware };
