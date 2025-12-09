@@ -26,7 +26,7 @@ const RequestSchema = mongoose.Schema(
       type: Date,
       default: null,
     },
-    respond: {
+    response: {
       type: String,
       enum: Object.values(RESPOND),
       default: null,

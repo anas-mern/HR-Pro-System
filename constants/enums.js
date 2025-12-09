@@ -8,7 +8,7 @@ const REQUEST_TYPE = {
   Exception: "exception",
 };
 const RESPOND = { Approve: "Approve", Reject: "Reject" };
-const EDIT_TYPE = { Deduction: "Deduction", Commission: "Commission" };
+const ACTION_TYPE = { Deduction: "Deduction", Commission: "Commission" };
 
 const userFields = [
   "username",
@@ -35,6 +35,6 @@ module.exports = {
   EXCEPTION_TYPE,
   REQUEST_TYPE,
   RESPOND,
-  EDIT_TYPE,
+  ACTION_TYPE,
   userFields,
 };

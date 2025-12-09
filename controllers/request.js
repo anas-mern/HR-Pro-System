@@ -2,14 +2,19 @@ const { StatusCodes } = require("http-status-codes");
 const Request = require("../models/request");
 const { REQUEST_TYPE } = require("../constants/enums");
 const { default: mongoose } = require("mongoose");
+const { BadRequest } = require("../errors");
 
 const get_requests = async (req, res) => {
-  const { page, requested_by, responded_by, type } = req.query;
+  const { page, requested_by, responded_by, responded, response, type } =
+    req.query;
   const query = {};
-  if (requested_by) query.requested_by = new mongoose.Types.ObjectId(requested_by);
-  if (responded_by) query.responded_by = new mongoose.Types.ObjectId(responded_by);
+  if (requested_by)
+    query.requested_by = new mongoose.Types.ObjectId(requested_by);
+  if (responded_by)
+    query.responded_by = new mongoose.Types.ObjectId(responded_by);
   if (type) query.type = { $in: type };
-
+  if (response) query.response = response;
+  if (responded === false) query.response = null;
   const data = await Request.find(query)
     .skip((page - 1) * 20)
     .limit(20);
@@ -46,11 +51,14 @@ const create_request = async (req, res) => {
 const respond = async (req, res) => {
   const { id } = req.params;
   const responded_by = req.user.id;
-  const { respond } = req.body;
+  const { response } = req.body;
   const responded_at = new Date();
+  const user = await Request.findById(id);
+  if (user.response !== null)
+    new BadRequest("You Can't Respond On This Request");
   const data = await Request.findByIdAndUpdate(id, {
     responded_by,
-    respond,
+    response,
     responded_at,
   });
   res.status(StatusCodes.OK).json({ success: true, data });

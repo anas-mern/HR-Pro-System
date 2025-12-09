@@ -5,10 +5,23 @@ const { GENDER, ROLE } = require("../constants/enums");
 require("dotenv").config();
 const UserSchema = mongoose.Schema(
   {
+    fcm: {
+      type: String,
+      required: [true, "Please Provide A FCM"],
+      unique: true,
+    },
     username: {
       type: String,
       required: [true, "Please Provide A UserName"],
       unique: true,
+    },
+    about_me: {
+      type: String,
+      required: [true, "Please Provide An Address"],
+    },
+    image_link: {
+      type: String,
+      required: [true, "Please Provide An Image"],
     },
     email: {
       type: String,
@@ -85,8 +98,8 @@ UserSchema.pre("save", async function (next) {
 });
 
 UserSchema.methods.createJWT = function () {
-  console.log(process.env.JWT_SECRET)
-  console.log(process.env.JWT_LIFETIME)
+  console.log(process.env.JWT_SECRET);
+  console.log(process.env.JWT_LIFETIME);
   return jwt.sign(
     { userId: this._id, username: this.username, role: this.role },
     process.env.JWT_SECRET,

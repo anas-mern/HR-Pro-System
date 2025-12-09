@@ -6,6 +6,8 @@ Joi.objectId = require("joi-objectid")(Joi);
 
 const userValidator = Joi.object({
   username: Joi.string().min(3).max(30).required(),
+  image_link: Joi.string().required(),
+  about_me: Joi.string().min(10).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   salary: Joi.number().min(0).required(),

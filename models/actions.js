@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-const { EDIT_TYPE } = require("../constants/enums");
+const { Action_TYPE } = require("../constants/enums");
 
 const ActionSchema = mongoose.Schema(
   {
-    edited_by: {
+    acted_by: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Please Provide The Admin Id"],
@@ -11,13 +11,13 @@ const ActionSchema = mongoose.Schema(
     type: {
       type: String,
       required: [true, "Please Provide The Edit Type"],
-      enum: Object.values(EDIT_TYPE)
+      enum: Object.values(Action_TYPE)
     },
     amount: {
       type: Number,
       required: [true, "Please Provide The Amount"],
     },
-    edited_on: {
+    acted_on: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Please Provide The Employee Id"],
@@ -30,6 +30,6 @@ const ActionSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model("action", ActionSchema);
+const Action = mongoose.model("action", ActionSchema);
 
-module.exports = User;
+module.exports = Action;

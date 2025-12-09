@@ -2,3 +2,5 @@
 /.env
 /logs
 /*.log
+/firebase-init.js
+/firebase-key.json

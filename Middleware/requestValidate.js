@@ -14,7 +14,7 @@ const requestValidator = Joi.object({
   reason: Joi.string().required(),
   responded_by: Joi.objectId().optional(),
   responded_at: Joi.date().optional(),
-  respond: Joi.string()
+  response: Joi.string()
     .valid(...Object.values(RESPOND))
     .optional(),
 

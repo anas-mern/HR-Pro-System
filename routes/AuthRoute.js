@@ -9,3 +9,4 @@ AuthRouter.route("/myaccount")
   .get(authMiddleware(false), me)
   .patch(authMiddleware(false), editme);
 module.exports = AuthRouter;
+
