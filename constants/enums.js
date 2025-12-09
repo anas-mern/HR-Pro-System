@@ -7,8 +7,8 @@ const REQUEST_TYPE = {
   Leave: "leave",
   Exception: "exception",
 };
-const RESPOND = { Approve: "Approve", Reject: "Reject" };
-const ACTION_TYPE = { Deduction: "Deduction", Commission: "Commission" };
+const RESPOND = { Approve: "approve", Reject: "reject" };
+const ACTION_TYPE = { Deduction: "deduction", Commission: "commission" };
 
 const userFields = [
   "username",

@@ -18,6 +18,7 @@ const authMiddleware = (admin) => {
       id: userId,
       role,
     };
+    console.log(req.user) // { id: '693626c1ca2dd89c09a3d927', role: 1 }
     if (admin && role !== 1) {
       throw new Unauthenticated("You Are Not Allowed To Do This Operation");
     }

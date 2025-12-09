@@ -14,13 +14,14 @@ const get_actions = async (req, res) => {
   res.status(StatusCodes.OK).json({ success: true, data });
 };
 const get_action = async (req, res) => {
-  const { id } = req.params();
+  const { id } = req.params;
   const data = await Action.findById(id);
   NotFoundThrower("Action", data);
   res.status(StatusCodes.OK).json({ success: true, data });
 };
 const create_action = async (req, res) => {
   const { acted_on, amount, type, reason } = req.body;
+  console.log(req.user) // no log
   const acted_by = req.user.id;
   const data = await Action.create({
     acted_on,
@@ -34,7 +35,7 @@ const create_action = async (req, res) => {
 const edit_action = async (req, res) => {
   const { acted_on, amount, type, reason } = req.body;
   const acted_by = req.user.id;
-  const { id } = req.params();
+  const { id } = req.params;
   const new_action = {};
   if (acted_on) new_action.acted_on = acted_on;
   if (acted_by) new_action.acted_by = acted_by;

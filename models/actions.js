@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Action_TYPE } = require("../constants/enums");
+const { ACTION_TYPE } = require("../constants/enums");
 
 const ActionSchema = mongoose.Schema(
   {
@@ -11,7 +11,7 @@ const ActionSchema = mongoose.Schema(
     type: {
       type: String,
       required: [true, "Please Provide The Edit Type"],
-      enum: Object.values(Action_TYPE)
+      enum: Object.values(ACTION_TYPE)
     },
     amount: {
       type: Number,

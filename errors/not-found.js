@@ -7,12 +7,10 @@ class NotFound extends Error {
   }
 }
 
-const NotFoundThrower = (itemName,item) => {
+const NotFoundThrower = (itemName, item) => {
   if (!item) {
-    return res
-      .status(StatusCodes.NOT_FOUND)
-      .json({ success: false, msg: `${itemName} not found` });
+    throw new NotFound(`The ${itemName} is not found`);
   }
 };
 
-module.exports = {NotFound,NotFoundThrower};
+module.exports = { NotFound, NotFoundThrower };

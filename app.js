@@ -21,10 +21,16 @@ app.use(
 );
 
 //Routes
-const { AuthRouter, UserRouter, RequestRouter } = require("./routes");
+const {
+  AuthRouter,
+  UserRouter,
+  RequestRouter,
+  ActionRouter,
+} = require("./routes");
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/user", UserRouter);
 app.use("/api/v1/request", RequestRouter);
+app.use("/api/v1/action", ActionRouter);
 
 //Error Handle
 const notFound = require("./Middleware/notFound");

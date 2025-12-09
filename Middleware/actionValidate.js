@@ -4,7 +4,7 @@ const { BadRequest } = require("../errors");
 const { ACTION_TYPE } = require("../constants/enums");
 
 const actionValidator = Joi.object({
-  acted_by: Joi.objectId().required(),
+  acted_by: Joi.objectId().optional(),
   type: Joi.string()
     .valid(...Object.values(ACTION_TYPE))
     .required(),
