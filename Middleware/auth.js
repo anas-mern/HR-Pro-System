@@ -13,12 +13,13 @@ const authMiddleware = (admin) => {
     }
     const token = headers.authorization.split(" ")[1];
 
-    const { role, userId } = jwt.verify(token, process.env.JWT_SECRET);
+    const { role, userId, username } = jwt.verify(token, process.env.JWT_SECRET);
     req.user = {
       id: userId,
+      username,
       role,
     };
-    console.log(req.user) // { id: '693626c1ca2dd89c09a3d927', role: 1 }
+    console.log(req.user) 
     if (admin && role !== 1) {
       throw new Unauthenticated("You Are Not Allowed To Do This Operation");
     }

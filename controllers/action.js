@@ -21,7 +21,7 @@ const get_action = async (req, res) => {
 };
 const create_action = async (req, res) => {
   const { acted_on, amount, type, reason } = req.body;
-  console.log(req.user) // no log
+  console.log(req.user)
   const acted_by = req.user.id;
   const data = await Action.create({
     acted_on,

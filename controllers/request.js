@@ -3,6 +3,7 @@ const Request = require("../models/request");
 const { REQUEST_TYPE } = require("../constants/enums");
 const { default: mongoose } = require("mongoose");
 const { BadRequest } = require("../errors");
+const { push_notification } = require("../constants/notification");
 
 const get_requests = async (req, res) => {
   const { page, requested_by, responded_by, responded, response, type } =
@@ -43,7 +44,8 @@ const create_request = async (req, res) => {
     request.date = req.body.date;
     request.duration = req.body.duration;
   }
-
+  const admins = await User.find({ role: 1 });
+  
   const data = await Request.create(request);
   res.status(StatusCodes.CREATED).json({ success: true, data });
 };
@@ -51,16 +53,29 @@ const create_request = async (req, res) => {
 const respond = async (req, res) => {
   const { id } = req.params;
   const responded_by = req.user.id;
+  const responder = req.user.username;
   const { response } = req.body;
   const responded_at = new Date();
-  const user = await Request.findById(id);
-  if (user.response !== null)
-    new BadRequest("You Can't Respond On This Request");
-  const data = await Request.findByIdAndUpdate(id, {
-    responded_by,
-    response,
-    responded_at,
-  });
+  const request = await Request.findById(id);
+  const user = await User.findById(request.requested_by);
+  const fcm = user?.fcm;
+  if (!fcm) throw new Error("FCM token not found for user");
+  console.log(fcm);
+  const type = request.type;
+  if (request.response !== null)
+    throw new BadRequest("You Can't Respond On This Request");
+  const title = `Your ${type} request is ${response.toUpperCase()}ED`;
+  const body = `${responder} has ${response}ed your request at ${responded_at}`;
+  push_notification(title, body, fcm);
+  const data = await Request.findByIdAndUpdate(
+    id,
+    {
+      responded_by,
+      response,
+      responded_at,
+    },
+    { new: true }
+  );
   res.status(StatusCodes.OK).json({ success: true, data });
 };
 
