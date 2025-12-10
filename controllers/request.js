@@ -44,8 +44,18 @@ const create_request = async (req, res) => {
     request.date = req.body.date;
     request.duration = req.body.duration;
   }
-  const admins = await User.find({ role: 1 });
-  
+  const { username } = req.user;
+  const title = `${username} requested a ${type} request`;
+  const body = `Reason: ${req.body.reason}`;
+  const admins = await User.find({ role: ROLE.Admin }).select("fcm");
+  const batchSize = 100;
+  for (let i = 0; i < admins.length; i += batchSize) {
+    const batch = admins.slice(i, i + batchSize);
+    await Promise.all(
+      batch.map((a) => push_notification(title, body, (fcm = a.fcm)))
+    );
+  }
+
   const data = await Request.create(request);
   res.status(StatusCodes.CREATED).json({ success: true, data });
 };
