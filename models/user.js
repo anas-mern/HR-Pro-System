@@ -19,7 +19,7 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: [true, "Please Provide An Address"],
     },
-    image_link: {
+    image: {
       type: String,
       required: [true, "Please Provide An Image"],
     },
@@ -54,8 +54,7 @@ const UserSchema = mongoose.Schema(
       required: [true, "Please Provide A Nationality"],
     },
     nationId: {
-      type: Number,
-      length: 14,
+      type: String,
       required: [true, "Please Provide A Nation ID"],
     },
     age: {
@@ -76,7 +75,7 @@ const UserSchema = mongoose.Schema(
       default: 21,
     },
     phone_num: {
-      type: Number,
+      type: String,
       required: [true, "Please Provide A Phone Num"],
     },
     join_date: {
