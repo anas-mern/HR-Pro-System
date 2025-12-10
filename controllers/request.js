@@ -4,7 +4,7 @@ const { REQUEST_TYPE } = require("../constants/enums");
 const { default: mongoose } = require("mongoose");
 const { BadRequest } = require("../errors");
 const { push_notification } = require("../constants/notification");
-
+const { User } = require("../models/user");
 const get_requests = async (req, res) => {
   const { page, requested_by, responded_by, responded, response, type } =
     req.query;
