@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const Request = require("../models/request");
-const { REQUEST_TYPE } = require("../constants/enums");
+const { REQUEST_TYPE, ROLE } = require("../constants/enums");
 const { default: mongoose } = require("mongoose");
 const { BadRequest } = require("../errors");
 const { push_notification } = require("../constants/notification");
