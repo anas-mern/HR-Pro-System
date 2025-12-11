@@ -8,14 +8,15 @@ const push_notification = async (title, body, fcm) => {
     },
     token: fcm,
   };
-  console.log(title)
-  console.log(body)
-  console.log(fcm)
-  console.log(message)
+  console.log(title);
+  console.log(body);
+  console.log(fcm);
+  console.log(message);
   try {
     await admin.messaging().send(message);
   } catch (error) {
-    throw new BadRequest("Unexpected Error In Sending Notification");
+    console.error("Firebase messaging error:", error);
+    throw new BadRequest(`Notification failed: ${error.message}`);
   }
 };
 
