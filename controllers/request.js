@@ -45,6 +45,7 @@ const create_request = async (req, res) => {
     request.duration = req.body.duration;
   }
   const { username } = req.user;
+  const { type } = request;
   const title = `${username} requested a ${type} request`;
   const body = `Reason: ${req.body.reason}`;
   const admins = await User.find({ role: ROLE.Admin }).select("fcm");
