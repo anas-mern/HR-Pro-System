@@ -1,4 +1,4 @@
-const admin = require("firebase-admin");
+const admin = require('../firebase-init')
 const { BadRequest } = require("../errors");
 
 const push_notification = async (title, body, fcm) => {
