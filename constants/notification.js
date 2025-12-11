@@ -1,4 +1,4 @@
-const push_notification = async (title, body, fcm) => {
+const push_notification = async (res, title, body, fcm) => {
   const message = {
     notification: {
       title,
@@ -15,4 +15,4 @@ const push_notification = async (title, body, fcm) => {
   }
 };
 
-module.exports = {push_notification}
+module.exports = { push_notification };
