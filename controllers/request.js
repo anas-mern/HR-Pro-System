@@ -52,7 +52,7 @@ const create_request = async (req, res) => {
   for (let i = 0; i < admins.length; i += batchSize) {
     const batch = admins.slice(i, i + batchSize);
     await Promise.all(
-      batch.map((a) => push_notification(res, title, body, (fcm = a.fcm)))
+      batch.map((a) => push_notification(title, body, (fcm = a.fcm)))
     );
   }
 
@@ -76,7 +76,7 @@ const respond = async (req, res) => {
     throw new BadRequest("You Can't Respond On This Request");
   const title = `Your ${type} request is ${response.toUpperCase()}ED`;
   const body = `${responder} has ${response}ed your request at ${responded_at}`;
-  push_notification(res, title, body, fcm);
+  push_notification(title, body, fcm);
   const data = await Request.findByIdAndUpdate(
     id,
     {
