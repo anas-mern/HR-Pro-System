@@ -7,13 +7,11 @@ const UserSchema = mongoose.Schema(
   {
     fcm: {
       type: String,
-      required: [true, "Please Provide A FCM"],
-      unique: true,
+      default: null,
     },
     username: {
       type: String,
       required: [true, "Please Provide A UserName"],
-      unique: true,
     },
     about_me: {
       type: String,

@@ -1,4 +1,4 @@
-const admin = require('../firebase-init')
+const admin = require("../firebase-init");
 const { BadRequest } = require("../errors");
 
 const push_notification = async (title, body, fcm) => {
@@ -9,10 +9,6 @@ const push_notification = async (title, body, fcm) => {
     },
     token: fcm,
   };
-  console.log(title);
-  console.log(body);
-  console.log(fcm);
-  console.log(message);
   try {
     await admin.messaging().send(message);
   } catch (error) {
