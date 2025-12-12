@@ -53,9 +53,7 @@ const create_request = async (req, res) => {
   for (let i = 0; i < admins.length; i += batchSize) {
     const batch = admins.slice(i, i + batchSize);
     await Promise.all(
-      batch.map((a) =>
-        push_notification(title, body, (device_token = a.device_token))
-      )
+      batch.map((a) => push_notification(title, body, a.device_token))
     );
   }
 
