@@ -48,12 +48,14 @@ const create_request = async (req, res) => {
   const { type } = request;
   const title = `${username} requested a ${type} request`;
   const body = `Reason: ${req.body.reason}`;
-  const admins = await User.find({ role: ROLE.Admin }).select("fcm");
+  const admins = await User.find({ role: ROLE.Admin }).select("device_token");
   const batchSize = 100;
   for (let i = 0; i < admins.length; i += batchSize) {
     const batch = admins.slice(i, i + batchSize);
     await Promise.all(
-      batch.map((a) => push_notification(title, body, (fcm = a.fcm)))
+      batch.map((a) =>
+        push_notification(title, body, (device_token = a.device_token))
+      )
     );
   }
 
@@ -69,15 +71,14 @@ const respond = async (req, res) => {
   const responded_at = new Date();
   const request = await Request.findById(id);
   const user = await User.findById(request.requested_by);
-  const fcm = user?.fcm;
-  if (!fcm) throw new Error("FCM token not found for user");
-  console.log(fcm);
+  const device_token = user?.device_token;
+  if (!device_token) throw new Error("Device token not found for user");
   const type = request.type;
   if (request.response !== null)
     throw new BadRequest("You Can't Respond On This Request");
   const title = `Your ${type} request is ${response.toUpperCase()}ED`;
   const body = `${responder} has ${response}ed your request at ${responded_at}`;
-  push_notification(title, body, fcm);
+  push_notification(title, body, device_token);
   const data = await Request.findByIdAndUpdate(
     id,
     {

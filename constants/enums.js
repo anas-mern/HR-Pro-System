@@ -16,7 +16,6 @@ const userFields = [
   "password",
   "image",
   "about_me",
-  "fcm",
   "salary",
   "KPIs",
   "address",
