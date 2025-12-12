@@ -1,13 +1,25 @@
 const admin = require("../firebase-init");
 const { BadRequest } = require("../errors");
 
-const push_notification = async (title, body, fcm) => {
+const push_notification = async (title, body, device_token) => {
   const message = {
     notification: {
       title,
       body,
     },
-    token: fcm,
+    android: {
+      notification: {
+        sound: "notification",
+      },
+    },
+    apns: {
+      payload: {
+        aps: {
+          sound: "notification",
+        },
+      },
+    },
+    token: device_token,
   };
   try {
     await admin.messaging().send(message);

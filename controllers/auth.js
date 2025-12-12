@@ -7,7 +7,7 @@ const { userFields } = require("../constants/enums");
 require("dotenv").config();
 
 const login = async (req, res) => {
-  const { email, password, fcm } = req.body;
+  const { email, password, device_token } = req.body;
   const user = await User.findOne({ email });
   NotFoundThrower("Email", user);
   console.log(user);
@@ -17,7 +17,7 @@ const login = async (req, res) => {
   }
   const token = user.createJWT();
   const { role: rl, password: pw, ...data } = user.toObject();
-  await User.findOneAndUpdate({ email }, { fcm });
+  await User.findOneAndUpdate({ email }, { device_token });
   res.status(StatusCodes.OK).json({ success: true, token, data });
 };
 

@@ -5,7 +5,7 @@ const { GENDER, ROLE } = require("../constants/enums");
 require("dotenv").config();
 const UserSchema = mongoose.Schema(
   {
-    fcm: {
+    device_token: {
       type: String,
       default: null,
     },

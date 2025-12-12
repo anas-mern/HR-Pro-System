@@ -4,7 +4,7 @@ const { BadRequest } = require("../errors");
 const loginValidate = (req, res, next) => {
   const schema = joi.object({
     email: joi.string().email().required(),
-    fcm: joi.string().required(),
+    device_token: joi.string().required(),
     password: joi.string().min(6).max(15).required(),
   });
   const { error } = schema.validate(req.body);
