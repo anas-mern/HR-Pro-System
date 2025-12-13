@@ -3,21 +3,11 @@ const { BadRequest } = require("../errors");
 
 const push_notification = async (title, body, device_token) => {
   const message = {
-    notification: {
+    data: {
       title,
       body,
-    },
-    android: {
-      notification: {
-        sound: "notification",
-      },
-    },
-    apns: {
-      payload: {
-        aps: {
-          sound: "notification",
-        },
-      },
+      playSound: "true",
+      type: "normal",
     },
     token: device_token,
   };
