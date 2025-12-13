@@ -8,7 +8,7 @@ const { User } = require("../models/user");
 const get_requests = async (req, res) => {
   const { page, requested_by, responded_by, responded, response, type } =
     req.query;
-  const { isMyRoute } = !isAdminRoute;
+  const { isMyRoute } = !(req.isAdminRoute);
   if (isMyRoute) requested_by = req.user.id;
   const query = {};
   if (requested_by)
