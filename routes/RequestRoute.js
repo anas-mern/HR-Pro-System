@@ -16,6 +16,7 @@ const RequestRouter = express.Router();
 RequestRouter.route("/")
   .get(authMiddleware(true), get_requests)
   .post(authMiddleware(false), requestValidate, create_request);
+RequestRouter.route("/mine").get(authMiddleware(false), get_requests);
 RequestRouter.route("/:id")
   .get(authMiddleware(true), get_request)
   .patch(authMiddleware(true), requestUpdateValidate, respond);

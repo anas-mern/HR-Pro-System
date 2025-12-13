@@ -19,6 +19,7 @@ const authMiddleware = (admin) => {
       username,
       role,
     };
+    req.isAdminRoute = admin
     console.log(req.user) 
     if (admin && role !== 1) {
       throw new Unauthenticated("You Are Not Allowed To Do This Operation");

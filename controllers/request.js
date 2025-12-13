@@ -8,6 +8,8 @@ const { User } = require("../models/user");
 const get_requests = async (req, res) => {
   const { page, requested_by, responded_by, responded, response, type } =
     req.query;
+  const { isMyRoute } = !isAdminRoute;
+  if (isMyRoute) requested_by = req.user.id;
   const query = {};
   if (requested_by)
     query.requested_by = new mongoose.Types.ObjectId(requested_by);
@@ -49,7 +51,7 @@ const create_request = async (req, res) => {
   const title = `${username} requested a ${type} request`;
   const body = `Reason: ${req.body.reason}`;
   const admins = await User.find({ role: ROLE.Admin }).select("device_token");
-  const validadmins = admins.filter(a => a.device_token)
+  const validadmins = admins.filter((a) => a.device_token);
   const batchSize = 100;
   for (let i = 0; i < validadmins.length; i += batchSize) {
     const batch = validadmins.slice(i, i + batchSize);
