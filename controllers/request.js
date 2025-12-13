@@ -49,9 +49,10 @@ const create_request = async (req, res) => {
   const title = `${username} requested a ${type} request`;
   const body = `Reason: ${req.body.reason}`;
   const admins = await User.find({ role: ROLE.Admin }).select("device_token");
+  const validadmins = admins.filter(a => a.device_token)
   const batchSize = 100;
-  for (let i = 0; i < admins.length; i += batchSize) {
-    const batch = admins.slice(i, i + batchSize);
+  for (let i = 0; i < validadmins.length; i += batchSize) {
+    const batch = validadmins.slice(i, i + batchSize);
     await Promise.all(
       batch.map((a) => push_notification(title, body, a.device_token))
     );
